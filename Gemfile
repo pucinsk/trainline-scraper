@@ -4,6 +4,8 @@ source "https://rubygems.org"
 
 ruby "3.2.2"
 
+gem "httparty"
+
 group :development do
   gem "rubocop", "~> 1.56", ">= 1.56.4"
   gem "rubocop-performance", "~> 1.19", ">= 1.19.1"
