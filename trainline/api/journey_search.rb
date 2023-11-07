@@ -16,7 +16,7 @@ module Trainline
       # end
 
       def post
-        self.class.post(URL, body:, headers:, debug_output: STDOUT)
+        self.class.post(URL, body: body.to_json, headers:, debug_output: STDOUT)
       end
 
       private
@@ -24,17 +24,11 @@ module Trainline
       def headers
         {
           "Content-Type": "application/json",
-          "Content-Length": body.size.to_s,
-          Connection: "keep-alive",
         }
       end
 
-      def body
-        @body ||= request_params.to_json
-      end
-
       ### example request params copied and hardcoded from thetrainlines website
-      def request_params # rubocop:disable Metrics/MethodLength
+      def body # rubocop:disable Metrics/MethodLength
         {
           passengers: [
             {
