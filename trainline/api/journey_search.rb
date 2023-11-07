@@ -33,6 +33,7 @@ module Trainline
         @body ||= request_params.to_json
       end
 
+      ### example request params copied and hardcoded from thetrainlines website
       def request_params # rubocop:disable Metrics/MethodLength
         {
           passengers: [

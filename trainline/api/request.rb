@@ -5,7 +5,7 @@ module Trainline
     module Request
       DEFAULT_LOCALE = "en-GB"
 
-      def self.included(base)
+      def self.included(base) # rubocop:disable Metrics/MethodLength
         require "httparty"
 
         base.include HTTParty
@@ -14,7 +14,9 @@ module Trainline
           {
             Accept: "application/json",
             "Accept-Language": "en-GB",
-            "x-version": "4.33.27158",
+            "x-version": "4.33.27160",
+            Host: "www.thetrainline.com",
+            "User-Agent": "lpapp",
           },
         )
       end
