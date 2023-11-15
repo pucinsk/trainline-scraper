@@ -18,17 +18,9 @@ module Trainline
         @limit = limit
       end
 
-      def get
-        return if object_blank?(resp) || object_blank?(resp["searchLocations"])
-
-        resp["searchLocations"].detect { _1["name"].casecmp(search_term).zero? }
-      end
-
-      private
-
-      def resp
-        self.class.get(URL,
-                       query: { searchTerm: search_term, locale:, limit: })
+      def request
+        @request ||= self.class.get(URL,
+                                    query: { searchTerm: search_term, locale:, limit: })
       end
     end
   end
