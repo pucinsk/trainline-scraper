@@ -10,9 +10,9 @@ module Trainline
 
       URL = "/api/journey-search/"
 
-      def initialize(departure_id:, destination_id:, depart_at:)
-        @departure_id = departure_id
-        @destination_id = destination_id
+      def initialize(departure:, destination:, depart_at:)
+        @departure = departure
+        @destination = destination
         @depart_at = depart_at
       end
 
@@ -22,10 +22,11 @@ module Trainline
 
       private
 
-      attr_reader :departure_id, :destination_id, :depart_at
+      attr_reader :departure, :destination, :depart_at
 
       def request_body
-        @request_body ||= RequestBody.new(departure_id:, destination_id:, depart_at:).to_h
+        @request_body ||= RequestBody.new(departure_id: departure.code, destination_id: destination.code,
+                                          depart_at:).to_h
       end
     end
   end

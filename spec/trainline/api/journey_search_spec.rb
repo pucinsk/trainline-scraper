@@ -4,17 +4,19 @@ require "spec_helper"
 require_relative "../../support/webmock"
 require_relative "../../../trainline/api/journey_search"
 require_relative "../../../trainline/api/journey_search/request_body"
+require_relative "../../../models/location"
 require_relative "../../../services/log"
 
 RSpec.describe Trainline::Api::JourneySearch do
   describe "#request" do
-    subject(:request) { described_class.new(departure_id:, destination_id:, depart_at:) }
+    subject(:request) { described_class.new(departure:, destination:, depart_at:) }
 
-    let(:departure_id) { "urn:trainline:generic:loc:182gb" }
-    let(:destination_id) { "urn:trainline:generic:loc:4916" }
+    let(:departure) { Location.new(code: "urn:trainline:generic:loc:182gb", name: "London") }
+    let(:destination) { Location.new(code: "urn:trainline:generic:loc:4916", name: "Paris") }
     let(:depart_at) { DateTime.parse("2023-11-11 13:00:00") }
     let(:req_body) do
-      Trainline::Api::JourneySearch::RequestBody.new(departure_id:, destination_id:, depart_at:).to_h
+      Trainline::Api::JourneySearch::RequestBody.new(departure_id: departure.code, destination_id: destination.code,
+                                                     depart_at:).to_h
     end
 
     before do
