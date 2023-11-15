@@ -37,12 +37,6 @@ module Trainline
         raise StandardError, "#request is not implemented"
       end
 
-      def object_blank?(res)
-        !res || res.empty?
-      end
-
-      private
-
       def response
         @response ||= begin
           Services::Log.run(message: "Error@#{self.class.name}: #{request.body}") unless request.code == 200

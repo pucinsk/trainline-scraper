@@ -1,68 +1,31 @@
 # frozen_string_literal: true
 
 require_relative "request"
+require_relative "journey_search/request_body"
 
 module Trainline
   module Api
     class JourneySearch
       include Request
 
-      URL = "/api/journey-search"
+      URL = "/api/journey-search/"
 
-      # def initialize(departure_id:, destination_id:, departure_at:)
-      #   @departure_id = departure_id
-      #   @destination_id = destination_id
-      #   @departure_at = departure_at
-      # end
+      def initialize(departure_id:, destination_id:, depart_at:)
+        @departure_id = departure_id
+        @destination_id = destination_id
+        @depart_at = depart_at
+      end
 
-      def post
-        self.class.post(URL, body: body.to_json, headers:, debug_output: STDOUT)
+      def request
+        self.class.post(URL, body: request_body.to_json)
       end
 
       private
 
-      def headers
-        {
-          "Content-Type": "application/json",
-        }
-      end
+      attr_reader :departure_id, :destination_id, :depart_at
 
-      ### example request params copied and hardcoded from thetrainlines website
-      def body # rubocop:disable Metrics/MethodLength
-        {
-          passengers: [
-            {
-              id: "075c3b72-c343-4a3c-afd6-d9f64689cd03",
-              dateOfBirth: "1996-11-07",
-              cardIds: [],
-            },
-          ],
-          isEurope: true,
-          cards: [],
-          transitDefinitions: [
-            {
-              direction: "outward",
-              origin: "urn:trainline:generic:loc:182gb",
-              destination: "urn:trainline:generic:loc:4916",
-              journeyDate: {
-                type: "departAfter",
-                time: "2023-11-07T13:45:00",
-              },
-            },
-          ],
-          type: "single",
-          maximumJourneys: 5,
-          includeRealtime: true,
-          transportModes: [
-            "mixed",
-          ],
-          directSearch: false,
-          composition: %w[
-            through
-            interchangeSplit
-          ],
-          requestedCurrencyCode: "EUR",
-        }
+      def request_body
+        @request_body ||= RequestBody.new(departure_id:, destination_id:, depart_at:).to_h
       end
     end
   end
