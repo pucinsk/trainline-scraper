@@ -1,2 +1,4 @@
 /.vscode
 /.irb_history
+/.byebug_history
+/tmp/*.log
